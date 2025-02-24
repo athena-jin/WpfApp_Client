@@ -1,0 +1,124 @@
+﻿<Window x:Class="WpfApp_Client.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp_Client"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="750" Width="1800" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock>Received Message From Serial Port</TextBlock>
+
+            <ListView ItemsSource="{Binding MessagesReceived}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="150" >
+                <ListView.View>
+                    <GridView>
+                        <!--<GridViewColumn Header="机器" DisplayMemberBinding="{Binding MachineId}" Width="100"/>-->
+                        <GridViewColumn Header="内容" DisplayMemberBinding="{Binding Content}" Width="600"/>
+                        <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Time}" Width="140"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ListView HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="150" ItemsSource="{Binding Data}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="参数" Width="80" DisplayMemberBinding="{Binding Key}"/>
+                        <GridViewColumn Header="数值">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Value, Mode=OneWay}"></TextBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <TextBlock>串口参数</TextBlock>
+            <TextBlock>Name</TextBlock>
+            <TextBlock Text="{Binding SerialPortName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="10" />
+            <TextBlock>Endpoints</TextBlock>
+            <TextBlock Text="{Binding SerialPortEndpoints}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="10" />
+            <TextBlock>已接收</TextBlock>
+            <TextBlock Text="{Binding MessagesReceivedCount}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+            <TextBlock>异常</TextBlock>
+            <TextBlock Text="{Binding MessagesReceivedFaildCount}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Open COM Sender" Command="{Binding OpenLocalSenderCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" />
+                <Button Content="Open COM Sender" Command="{Binding CloseLocalSenderCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" />
+                <Button Content="Start Receive Message From Serial Port" Command="{Binding StartReceiveFromSerialPortCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="250" Margin="10" />
+                <Button Content="Stop Receive From Serial Port" Command="{Binding StopReceiveFromSerialPortCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="10" />
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" Grid.Column="1">
+            <TextBlock>Sended Message Into Server</TextBlock>
+            <ListView ItemsSource="{Binding MessagesSended}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="150" >
+                <ListView.View>
+                    <GridView>
+                        <!--<GridViewColumn Header="机器" DisplayMemberBinding="{Binding MachineId}" Width="100"/>-->
+                        <GridViewColumn Header="内容" DisplayMemberBinding="{Binding Content}" Width="600"/>
+                        <GridViewColumn Header="时间" DisplayMemberBinding="{Binding Time}" Width="140"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!--<ListView HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="150" ItemsSource="{Binding Data}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="参数" Width="80" DisplayMemberBinding="{Binding Key}"/>
+                        <GridViewColumn Header="数值">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBox Text="{Binding Value, Mode=OneWay}"></TextBox>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>-->
+
+            <TextBlock>已发送</TextBlock>
+            <TextBox Text="{Binding MessagesSendedCount}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+
+            <!--<TextBlock>API Port Set</TextBlock>
+            <CheckBox IsChecked="{Binding IsUrlPost}">Open</CheckBox>
+            <TextBlock>Address</TextBlock>
+            <TextBox Text="{Binding TempUrlAddress}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+            <TextBlock>Status</TextBlock>
+            <TextBlock Text="{Binding UrlPortStatus}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+
+            <TextBlock>Serial Port Set</TextBlock>
+            <TextBlock>Port Name</TextBlock>
+            <ComboBox ItemsSource="{Binding SerialPortNames}" SelectedItem="{Binding SerialPortName}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="10" />
+            <TextBlock>BaudRate</TextBlock>
+            <TextBox Text="{Binding TempSerialPortBaudRate}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>
+            <TextBlock>Status</TextBlock>
+            <TextBlock Text="{Binding SerialPortStatus}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Height="20"/>-->
+
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Send Data" Command="{Binding SendCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" />
+                <Button Content="Start Send" Command="{Binding StartSendCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" />
+                <Button Content="Stop Send" Command="{Binding StopSendCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="10" />
+            </StackPanel>
+        </StackPanel>
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" ItemsSource="{Binding Output}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="输出" DisplayMemberBinding="{Binding}" Width="800"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+
+</Window>
